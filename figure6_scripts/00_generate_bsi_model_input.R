@@ -286,7 +286,7 @@ sample_meta <- suppressMessages(
 # 7) Extract taxa abundances required by Fig6C/Fig6D
 # -----------------------------------------------------------------------------
 
-message("Extracting required family/phylum/ASV abundances...")
+message("Extracting required family/phylum abundances...")
 
 family_targets <- c(
   "Bacteroidaceae",
@@ -300,7 +300,6 @@ family_targets <- c(
   "Pseudomonadaceae"
 )
 phylum_targets <- c("Proteobacteria")
-asv_targets <- c("ASV_277")
 
 # Family-level relative abundance table (selected taxa only).
 family_abund <- extract_selected_abundances(
@@ -314,13 +313,6 @@ phylum_abund <- extract_selected_abundances(
   file_path = "data/Liao_etal_2021/tblcounts_phylum_wide.csv",
   taxon_col = "Phylum",
   target_taxa = phylum_targets
-)
-
-# ASV-level relative abundance table (ASV_277 benchmark feature).
-asv_abund <- extract_selected_abundances(
-  file_path = "data/Liao_etal_2021/tblcounts_asv_wide.csv",
-  taxon_col = "ASV",
-  target_taxa = asv_targets
 )
 
 # -----------------------------------------------------------------------------
@@ -343,7 +335,6 @@ episode_cutoffs <- sample_meta %>%
 bsi_model_input <- sample_meta %>%
   left_join(family_abund, by = "SampleID") %>%
   left_join(phylum_abund, by = "SampleID") %>%
-  left_join(asv_abund, by = "SampleID") %>%
   left_join(episode_cutoffs, by = c("PatientID", "NearestHCTTimepoint", "TransplantEpisodeID")) %>%
   mutate(across(ends_with("_abund"), ~ replace_na(.x, 0))) %>%
   select(
@@ -365,8 +356,7 @@ bsi_model_input <- sample_meta %>%
     Marinifilaceae_abund,
     Rikenellaceae_abund,
     Tannerellaceae_abund,
-    Prevotellaceae_abund,
-    ASV_277_abund
+    Prevotellaceae_abund
   )
 
 # -----------------------------------------------------------------------------

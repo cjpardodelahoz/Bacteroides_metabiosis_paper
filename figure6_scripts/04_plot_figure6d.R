@@ -77,7 +77,6 @@ recalc_patient_features_cutoff <- function(cutoff, test_patient_ids, input_tbl) 
     group_by(PatientID, TransplantEpisodeID, has_infection, received_quin) %>%
     summarise(
       median_proteobacteria_post = median(Proteobacteria_abund, na.rm = TRUE),
-      median_ASV_277_abund_post = median(ASV_277_abund, na.rm = TRUE),
       median_bacteroidaceae_post = median(Bacteroidaceae_abund, na.rm = TRUE),
       median_tannerellaceae_post = median(Tannerellaceae_abund, na.rm = TRUE),
       n_samples_post = n(),
@@ -105,7 +104,6 @@ patient_features <- plot_input %>%
     median_bacteroidaceae_post = median(Bacteroidaceae_abund[post_quin], na.rm = TRUE),
     median_tannerellaceae_post = median(Tannerellaceae_abund[post_quin], na.rm = TRUE),
     median_proteobacteria_post = median(Proteobacteria_abund[post_quin], na.rm = TRUE),
-    median_ASV_277_abund_post = median(ASV_277_abund[post_quin], na.rm = TRUE),
     n_samples_post = sum(post_quin, na.rm = TRUE),
     .groups = "drop"
   ) %>%
