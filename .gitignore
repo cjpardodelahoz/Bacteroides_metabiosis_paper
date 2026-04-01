@@ -1,0 +1,39 @@
+# Data and results directories (large files, not tracked)
+data/
+results/
+analyses/
+
+# Supporting data directories
+hmms/
+log/
+
+# Temporary and system files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# R artifacts
+.RData
+.Rhistory
+*.Rout
+
+# Python environments
+.venv/
+venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.bak
+*.lock

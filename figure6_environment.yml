@@ -1,0 +1,12 @@
+name: figure6_r
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base=4.4.3
+  - r-tidyverse=2.0.0
+  - r-data.table=1.17.0
+  - r-ape=5.8_1
+  - r-aplot=0.2.5
+  - r-proc=1.18.5
+  - bioconductor-ggtree=3.14.0
