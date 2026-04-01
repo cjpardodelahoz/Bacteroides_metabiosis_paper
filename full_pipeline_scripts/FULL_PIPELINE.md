@@ -23,7 +23,6 @@ Return to the main project page: [README](../README.md).
   - `13_compile_puls.sh`
 - `build_nc_mags.R`: R script that combines CheckM2 + GTDB outputs and generates the filtered MAG list.
 - `concatenate_assemblies_for_vamb.sh`, `merge_aemb.py`: helpers for VAMB input preparation.
-- `get_pulfeatures.py`, `extract_gene_aa.py`: helper scripts copied from `software/custom/`.
 
 ## Typical execution order
 
