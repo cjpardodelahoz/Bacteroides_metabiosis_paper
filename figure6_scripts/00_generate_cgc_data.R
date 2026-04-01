@@ -31,7 +31,7 @@ compiled_signalp <- fread("analyses/bacteroides_pul/mag_pul_summary/compiled_sig
   select(mag, cgc, protein_id, Prediction)
 
 # GTDB taxonomy summary for recovered MAGs
-gtdb <- read_delim("analyses/enterococcus_diversity_II/binning/short/isabl1/gtdb/gtdbtk.bac120.summary.tsv", show_col_types = FALSE)
+gtdb <- read_delim("analyses/bacteroides_pul/gtdb/gtdbtk.bac120.summary.tsv", show_col_types = FALSE)
 # CheckM2 quality report for recovered MAGs
 checkm <- read_delim("analyses/bacteroides_pul/checkm2/quality_report.tsv", show_col_types = FALSE)
 

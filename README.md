@@ -22,7 +22,7 @@ Run from repository root:
 
 ```bash
 # Download GTDB tree/taxonomy references required by Figure 6A/6B
-bash full_pipeline_scripts/bash_blocks/04_download_gtdb_r226_refs.sh
+bash full_pipeline_scripts/bash_blocks/09_download_gtdb_r226_refs.sh
 ```
 
 This downloads GTDB files into `data/gtdb/`. Then, run the R scripts to get the plots:
@@ -46,4 +46,4 @@ You should get the following outputs:
 
 If you want to see the full pipeline to get MAGs-to-CGC/PUL from raw reads, see:
 
-- [Full pipeline guide](full_pipeline_scripts/UPSTREAM_PIPELINE.md)
+- [Full pipeline guide](full_pipeline_scripts/FULL_PIPELINE.md)

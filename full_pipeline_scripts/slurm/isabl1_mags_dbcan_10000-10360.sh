@@ -4,22 +4,31 @@
 #SBATCH --mem=16G         # Memory per task
 #SBATCH -c 4              # Number of CPU cores per task
 #SBATCH --time=24:00:00   # Maximum runtime
-#SBATCH --error=log/bacteroides_pul/isabl1_mags_dbcan_10000-10360_%A_%a.err
-#SBATCH --output=log/bacteroides_pul/isabl1_mags_dbcan_10000-10360_%A_%a.out
+#SBATCH --error=log/slurm/isabl1_mags_dbcan_10000-10360_%A_%a.err
+#SBATCH --output=log/slurm/isabl1_mags_dbcan_10000-10360_%A_%a.out
 #SBATCH --partition=cpu
 
 # Activate conda
 source $(conda info --base)/etc/profile.d/conda.sh
 conda activate dbcan
+mkdir -p log/slurm
 
 # Set paths
-MAG_DIR="analyses/bacteroides_pul/mags"
+MAG_DIR="analyses/bacteroides_pul/binning/short/isabl1/vamb/multi_bins"
 OUTPUT_DIR="analyses/bacteroides_pul/mag_pul_prediction/isabl1"
 DB_DIR="/data1/xavierj/carlos/dbs/dbcan"
 
 # Get the MAG file for the current task
 MAG=$(tail -n 361 analyses/bacteroides_pul/isabl1_nc_mags.txt | sed -n ${SLURM_ARRAY_TASK_ID}p)
+if [[ -z "${MAG}" ]]; then
+  echo "No MAG entry for task ${SLURM_ARRAY_TASK_ID}; exiting"
+  exit 0
+fi
 MAG_PATH="${MAG_DIR}/${MAG}.fna"
+if [[ ! -f "${MAG_PATH}" ]]; then
+  echo "MAG file not found: ${MAG_PATH}; exiting"
+  exit 1
+fi
 
 # Create output directory for the current MAG
 MAG_OUTPUT_DIR="${OUTPUT_DIR}/${MAG}"
