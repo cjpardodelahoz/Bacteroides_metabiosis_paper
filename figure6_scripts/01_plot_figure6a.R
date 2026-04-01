@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 # -----------------------------------------------------------------------------
-# Figure 6B plotting script
+# Figure 6A plotting script
 #
 # Purpose:
 # Recreate the Bacteroidaceae substrate-diversity combined panel (tree +
@@ -150,7 +150,7 @@ compiled_puls <- cgc_data %>%
   left_join(susc_data, by = c("mag", "CGC#")) %>%
   filter(susc == TRUE)
 
-# Keep only signal-positive digestive CGCs in Bacteroidaceae and summarize
+# Keep only signal-peptide positive digestive CGCs in Bacteroidaceae and summarize
 # pul_data = per-genome/per-substrate median number of qualifying CGCs
 pul_data <- cgc_data %>%
   filter(

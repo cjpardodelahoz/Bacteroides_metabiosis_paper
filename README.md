@@ -2,18 +2,6 @@
 
 This repository contains the code to reproduce the panels of Figure 6 in [our paper (Wucher et al.)]() linking *Bacteroides* metabiosis to increased risk of Pseudomonadota bloodstream infection. This mainly concerns the inference of CAZyme gene clusters for peri/extracellular polysaccharide degradation and predictive modeling of Pseudomonadota BSI in allo-HCT patients at MSKCC.
 
-## Repository layout
-
-- `figure6_scripts/`
-  - `00_generate_cgc_data.R`
-  - `00_generate_bsi_model_input.R`
-  - `01_plot_figure6a.R`
-  - `02_plot_figure6b.R`
-  - `03_plot_figure6c.R`
-  - `04_plot_figure6d.R`
-- `full_pipeline_scripts/`
-  - HPC and shell scripts to run full pipeline from raw reads downloaded from SRA.
-
 ## Figure 6 quickstart
 
 ### Dowload code and data

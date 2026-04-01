@@ -56,7 +56,7 @@ plot_input <- suppressMessages(read_csv("data/figure6/bsi_model_input.csv")) %>%
   )
 
 # Recompute test-set patient-episode medians for each cutoff day.
-# This mirrors the qmd strategy where test features are recalculated as if only
+# Test features are recalculated as if only
 # data up to the cutoff were available.
 recalc_patient_features_cutoff <- function(cutoff, test_patient_ids, input_tbl) {
   input_tbl %>%
