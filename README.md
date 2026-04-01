@@ -6,7 +6,7 @@ This repository contains the code to reproduce the panels of Figure 6 in [our pa
 
 ### Dowload code and data
 
-You can quickly reproduce Figure 6 by clonig this repository and downloading the pre-processed CGC and patient data from the paper's [Data repository](). From the data download, copy the folder `figure6` under `data/figure6/` in this repo. You will need files `cgc_data.csv` and `bsi_model_input.csv`.
+You can quickly reproduce Figure 6 by cloning this repository and downloading the pre-processed CGC and patient data from the paper's [Data repository](). From the data download, copy the folder `figure6` under `data/figure6/` in this repo. You will need files `cgc_data.csv` and `bsi_model_input.csv`.
 
 ### Set R environment
 

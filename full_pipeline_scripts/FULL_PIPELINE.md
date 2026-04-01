@@ -1,6 +1,6 @@
 # Full Assembly + Binning + MAG/CGC/PUL Pipeline
 
-This folder contains scripts to run the complete upstream workflow from raw reads to MAG-level CGC/PUL summaries used by the Figure 6 data-prep scripts.
+This folder contains scripts to run the complete workflow from raw reads to MAG-level CGC/PUL summaries used by the Figure 6 data-prep scripts.
 
 Return to the main project page: [README](../README.md).
 
@@ -24,7 +24,7 @@ Return to the main project page: [README](../README.md).
 - `build_nc_mags.R`: R script that combines CheckM2 + GTDB outputs and generates the filtered MAG list.
 - `concatenate_assemblies_for_vamb.sh`, `merge_aemb.py`: helpers for VAMB input preparation.
 
-## Typical execution order
+## Bioinformatic pipeline
 
 ### A) Metagenome Assembly
 
@@ -71,7 +71,7 @@ bash full_pipeline_scripts/bash_blocks/05_compile_vamb_bins.sh
 
 Output: `analyses/bacteroides_pul/binning/short/isabl1/vamb/multi_bins/`
 
-### C) MAG QC, taxonomy, and CGC/PUL inference
+### C) MAG QC and taxonomy
 
 After bin compilation completes:
 
@@ -100,6 +100,10 @@ bash full_pipeline_scripts/bash_blocks/08_build_nc_mags.sh
 Outputs:
 - `analyses/bacteroides_pul/mag_pul_summary/mag_qc_taxonomy_summary.tsv`
 - `analyses/bacteroides_pul/isabl1_nc_mags.txt`
+
+### D) CGC/PUL inference
+
+After section C is complete:
 
 4. Download GTDB release 226 tree/taxonomy references for Figure 6A/6B plotting:
 
@@ -142,9 +146,9 @@ bash full_pipeline_scripts/bash_blocks/13_compile_puls.sh
 
 Output: `analyses/bacteroides_pul/mag_pul_summary/compiled_puls.tsv`
 
-### D) Regenerate Figure 6 input tables from upstream outputs
+### E) Regenerate Figure 6 input tables from upstream outputs
 
-After section C is complete, regenerate Figure 6 pre-plot data tables:
+After sections C and D are complete, regenerate Figure 6 pre-plot data tables:
 
 1. Build `cgc_data.csv` from compiled CGC/SignalP/PUL + CheckM2/GTDB outputs:
 
@@ -152,7 +156,7 @@ After section C is complete, regenerate Figure 6 pre-plot data tables:
 conda run -n figure6_r Rscript figure6_scripts/00_generate_cgc_data.R
 ```
 
-2. Build `bsi_model_input.csv` from clinical/abundance source tables:
+2. Build `bsi_model_input.csv` from clinical/abundance source tables [(Liao et al. 2021)](https://doi.org/10.1038/s41597-021-00860-8). The tables in .csv format are available in a [FigShare repository](https://doi.org/10.6084/m9.figshare.13584986), and should be placed under `data/Liao_etal_2021`. After that, you can run:
 
 ```bash
 conda run -n figure6_r Rscript figure6_scripts/00_generate_bsi_model_input.R
@@ -164,7 +168,4 @@ Outputs:
 
 ## Notes
 
-- SLURM logs are written under `log/slurm/` (some legacy scripts may also use `log/bacteroides_pul/`).
-- The filtered MAG list in `analyses/bacteroides_pul/isabl1_nc_mags.txt` is a required input for dbCAN/SignalP array jobs and all downstream compilation scripts.
-- This upstream flow intentionally excludes the optional SusD-HMM branch.
 - If you only need final Figure 6 panels from precomputed inputs, use the quickstart in [README](../README.md#figure-6-quickstart).
