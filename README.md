@@ -14,9 +14,7 @@ The Figure 6C, 6D and S6B scripts also read 16S data from [Liao et al. 2021](htt
 - `tblASVsamples.csv`
 - `tblhctmeta.csv`
 - `tbldrug.csv`
-- `tblASVtaxonomy_silva132_v4v5_filter.csv` (only needed to rebuild `data/figure6/asv_taxonomy.csv`)
-
-See [data/figure6/README.md](data/figure6/README.md) and [data/figureS6/README.md](data/figureS6/README.md) for a description of each file.
+- `tblASVtaxonomy_silva132_v4v5_filter.csv`
 
 ### Set R environment
 
