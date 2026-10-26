@@ -1,6 +1,6 @@
 # Full Assembly + Binning + MAG/CGC/PUL Pipeline
 
-This folder contains scripts to run the complete workflow from raw reads to MAG-level CGC/PUL summaries used by the Figure 6 data-prep scripts.
+This folder contains scripts to run the complete workflow from raw reads to MAG-level CGC/PUL summaries used by the Figure 6 and Figure S6 data-prep scripts.
 
 Return to the main project page: [README](../README.md).
 
@@ -21,6 +21,7 @@ Return to the main project page: [README](../README.md).
   - `11_compile_cgcs.sh`
   - `12_compile_signalp.sh`
   - `13_compile_puls.sh`
+  - `14_compile_dbcansub_substrates.sh`
 - `build_nc_mags.R`: R script that combines CheckM2 + GTDB outputs and generates the filtered MAG list.
 - `concatenate_assemblies_for_vamb.sh`, `merge_aemb.py`: helpers for VAMB input preparation.
 
@@ -146,26 +147,45 @@ bash full_pipeline_scripts/bash_blocks/13_compile_puls.sh
 
 Output: `analyses/bacteroides_pul/mag_pul_summary/compiled_puls.tsv`
 
-### E) Regenerate Figure 6 input tables from upstream outputs
+9. Compile dbCAN-sub substrate annotations per protein (used by Figure 6B):
 
-After sections C and D are complete, regenerate Figure 6 pre-plot data tables:
+```bash
+bash full_pipeline_scripts/bash_blocks/14_compile_dbcansub_substrates.sh
+```
 
-1. Build `cgc_data.csv` from compiled CGC/SignalP/PUL + CheckM2/GTDB outputs:
+Output: `analyses/bacteroides_pul/mag_pul_summary/compiled_dbcansub_substrates.tsv.gz`
+
+### E) Regenerate Figure 6 and Figure S6 input tables from upstream outputs
+
+After sections C and D are complete, regenerate the pre-plot data tables. The 16S and clinical source tables from [Liao et al. 2021](https://doi.org/10.1038/s41597-021-00860-8) are available in a [FigShare repository](https://doi.org/10.6084/m9.figshare.13584986), and should be placed under `data/Liao_etal_2021`.
+
+1. Build `cgc_data.csv` and `cgc_dbcansub_substrates.csv.gz` from compiled CGC/SignalP/PUL/dbCAN-sub + CheckM2/GTDB outputs:
 
 ```bash
 conda run -n figure6_r Rscript figure6_scripts/00_generate_cgc_data.R
 ```
 
-2. Build `bsi_model_input.csv` from clinical/abundance source tables [(Liao et al. 2021)](https://doi.org/10.1038/s41597-021-00860-8). The tables in .csv format are available in a [FigShare repository](https://doi.org/10.6084/m9.figshare.13584986), and should be placed under `data/Liao_etal_2021`. After that, you can run:
+2. Stage the PICRUSt2 custom-trait inputs and build the merged ASV taxonomy. This step documents provenance: its upstream inputs are not distributed with this repository, and its outputs are included in the data download. It expects the PICRUSt2 predictions for the Liao et al. 2021 ASVs, the frozen Figure 1E matched design, the dbCAN family + EC substrate mapping, and the per-sample metagenome features under `analyses/picrust_custom_traits/` (see the script header for exact paths):
 
 ```bash
-conda run -n figure6_r Rscript figure6_scripts/00_generate_bsi_model_input.R
+conda run -n figure6_r Rscript figure6_scripts/00_generate_picrust_data.R
+```
+
+3. Build the Figure 6C family abundance table from the Liao et al. 2021 tables and `asv_taxonomy.csv` (requires step 2):
+
+```bash
+conda run -n figure6_r Rscript figure6_scripts/00_generate_family_abundance.R
 ```
 
 Outputs:
 - `data/figure6/cgc_data.csv`
-- `data/figure6/bsi_model_input.csv`
+- `data/figure6/cgc_dbcansub_substrates.csv.gz`
+- `data/figure6/asv_taxonomy.csv`
+- `data/figure6/picrust_*.tsv.gz`, `data/figure6/fig1e_*.csv`, `data/figure6/dbcan_*`
+- `data/figure6/family_abundance.csv`
+- `data/figureS6/metagenome_sample_features.tsv`
 
 ## Notes
 
-- If you only need final Figure 6 panels from precomputed inputs, use the quickstart in [README](../README.md#figure-6-quickstart).
+- If you only need final Figure 6 and Figure S6 panels from precomputed inputs, use the quickstart in [README](../README.md#quickstart).
+- The upstream PICRUSt2 custom-trait workflow (reference-genome dbCAN/SignalP annotation, custom trait table, hidden-state prediction, and metagenome feature extraction) is not yet documented here.

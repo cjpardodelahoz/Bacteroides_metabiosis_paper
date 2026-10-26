@@ -11,6 +11,9 @@
 #     * has_signalp_cgc  : CGC contains >=1 digestive CAZyme with signal peptide
 #     * has_signalp_gene : gene is one of those signal-peptide digestive CAZymes
 # - Writes a single publication-ready table to data/figure6/cgc_data.csv.
+# - Also exports the per-protein dbCAN-sub substrate annotations used by
+#   Figure 6B to data/figure6/cgc_dbcansub_substrates.csv.gz (joined to
+#   cgc_data.csv through `Mag` + `Protein id`).
 # -----------------------------------------------------------------------------
 
 suppressPackageStartupMessages({
@@ -172,6 +175,7 @@ cgc_data_filtered <- compiled_cgc %>%
     `CGC#`,
     `Gene Type`,
     `Gene Annotation`,
+    `Protein ID`,
     `Contig ID`,
     `Gene Start`,
     `Gene Stop`,
@@ -188,6 +192,7 @@ cgc_data_filtered <- compiled_cgc %>%
     `Cgc#` = `CGC#`,
     `Gene type` = `Gene Type`,
     `Gene annotation` = `Gene Annotation`,
+    `Protein id` = `Protein ID`,
     `Contig id` = `Contig ID`,
     `Gene start` = `Gene Start`,
     `Gene stop` = `Gene Stop`,
@@ -220,3 +225,21 @@ if (!dir.exists("data/figure6")) {
 
 write_csv(cgc_data_filtered, "data/figure6/cgc_data.csv")
 message("Saved: data/figure6/cgc_data.csv")
+
+# -----------------------------------------------------------------------------
+# 5) Export per-protein dbCAN-sub substrate annotations (Figure 6B)
+# -----------------------------------------------------------------------------
+
+# One row per dbCAN-sub (eCAMI subfamily) hit; a protein can have several hits.
+# Compiled by full_pipeline_scripts/bash_blocks/14_compile_dbcansub_substrates.sh.
+dbcansub <- fread("analyses/bacteroides_pul/mag_pul_summary/compiled_dbcansub_substrates.tsv.gz", sep = "\t", quote = "") %>%
+  filter(mag %in% nc_mags) %>%
+  transmute(
+    `Mag` = mag,
+    `Protein id` = protein_id,
+    `Dbcan-sub subfamily` = subfam,
+    `Dbcan-sub substrate` = substrate
+  )
+
+write_csv(dbcansub, "data/figure6/cgc_dbcansub_substrates.csv.gz")
+message("Saved: data/figure6/cgc_dbcansub_substrates.csv.gz")
