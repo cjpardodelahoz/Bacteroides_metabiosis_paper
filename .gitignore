@@ -1,5 +1,6 @@
 # Data and results directories (large files, not tracked)
-data/
+/data/*
+!/data/read_metadata.csv
 results/
 analyses/
 
