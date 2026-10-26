@@ -14,7 +14,13 @@ The Figure 6C, 6D and S6B scripts also read 16S data from [Liao et al. 2021](htt
 - `tblASVsamples.csv`
 - `tblhctmeta.csv`
 - `tbldrug.csv`
-- `tblASVtaxonomy_silva132_v4v5_filter.csv`
+
+All analyses use the ASV taxonomy (Phylum, Family, Genus) from Chen Liao's [oral bacteria repository](https://github.com/liaochen1988/Oral_bacterial_manuscript_revision/blob/main/Fig4%7CFigS1_S2%7CEDFig6_9%7CTableS5/taxonomy.csv). Download `taxonomy.csv` into `data/` before running the scripts:
+
+```bash
+curl -L -o data/taxonomy.csv \
+  "https://raw.githubusercontent.com/liaochen1988/Oral_bacterial_manuscript_revision/main/Fig4%7CFigS1_S2%7CEDFig6_9%7CTableS5/taxonomy.csv"
+```
 
 ### Set R environment
 
