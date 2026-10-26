@@ -15,6 +15,14 @@ The Figure 6C, 6D and S6B scripts also read 16S data from [Liao et al. 2021](htt
 - `tblhctmeta.csv`
 - `tbldrug.csv`
 
+`data/read_metadata.csv` is the canonical shotgun manifest: 2,022 samples from
+565 patients, with the final selected SRA accessions. All shotgun sample lists
+must be subsets of this manifest. The distributed metagenome feature table
+contains 2,014 of these samples; eight lack successful CGC predictions
+(`1042U`, `1044R`, `1818H`, `772E`, `FMT.0034D`, `FMT.0034U`, `FMT.0154N`,
+`FMT.0245H`). Figure S6B pairs 985 samples with the Figure 1E 16S histories.
+The independent 16S cohorts and Figure 6 analyses are unchanged.
+
 All analyses use the ASV taxonomy (Phylum, Family, Genus) from [the repository for Liao et al. 2024](https://github.com/liaochen1988/Oral_bacterial_manuscript_revision/blob/main/Fig4%7CFigS1_S2%7CEDFig6_9%7CTableS5/taxonomy.csv). Download `taxonomy.csv` into `data/` before running the scripts:
 
 ```bash

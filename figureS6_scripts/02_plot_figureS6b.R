@@ -86,6 +86,9 @@ for (col in picrust_cols) picrust[is.na(get(col)), (col) := 0]
 # -----------------------------------------------------------------------------
 
 meta <- fread("data/figureS6/metagenome_sample_features.tsv", colClasses = c(SampleID = "character"))
+manifest <- fread("data/read_metadata.csv", colClasses = c(SampleID = "character"))
+stopifnot(!anyDuplicated(manifest$SampleID), !anyDuplicated(meta$SampleID),
+          all(meta$SampleID %in% manifest$SampleID))
 paired <- merge(picrust, meta, by = "SampleID")
 message(sprintf("PICRUSt samples: %d | metagenome samples: %d | paired: %d",
                 nrow(picrust), nrow(meta), nrow(paired)))

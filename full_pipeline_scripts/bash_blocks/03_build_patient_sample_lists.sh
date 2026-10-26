@@ -8,10 +8,19 @@ set -euo pipefail
 
 mkdir -p analyses/bacteroides_pul/binning/short/isabl1/patient_samples
 
-awk -F',' 'NR>1 {gsub(/\r/,"",$2); gsub(/\r/,"",$3); print $3"\t"$2}' data/read_metadata.csv \
-  | while IFS=$'\t' read -r patient sample; do
-      grep -qx "$sample" analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt || continue
-      echo "$sample" >> "analyses/bacteroides_pul/binning/short/isabl1/patient_samples/${patient}.txt"
-    done
+Rscript - <<'RS'
+metadata <- read.csv("data/read_metadata.csv", colClasses = "character")
+stopifnot(!anyDuplicated(metadata$SampleID), !anyNA(metadata$PatientID),
+          all(nzchar(metadata$PatientID)))
+successful <- readLines("analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt")
+stopifnot(all(successful %in% metadata$SampleID))
+metadata <- metadata[metadata$SampleID %in% successful, ]
+directory <- "analyses/bacteroides_pul/binning/short/isabl1/patient_samples"
+unlink(list.files(directory, pattern = "[.]txt$", full.names = TRUE))
+for (patient in unique(metadata$PatientID)) {
+  writeLines(metadata$SampleID[metadata$PatientID == patient],
+             file.path(directory, paste0(patient, ".txt")))
+}
+RS
 
 echo "Successfully created patient sample lists in: analyses/bacteroides_pul/binning/short/isabl1/patient_samples/"

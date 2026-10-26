@@ -6,6 +6,8 @@ set -euo pipefail
 # their SignalP-positive subset, and the secreted host glycan / pectin subsets
 # Output: analyses/bacteroides_pul/metagenome_features/per_sample/{SampleID}.tsv
 
-sbatch full_pipeline_scripts/slurm/metagenome_sample_features.sh
+N_SAMPLES=$(wc -l < analyses/bacteroides_pul/metagenome_pul_prediction/isabl1_dbcan_successful_samples.txt)
+[[ "$N_SAMPLES" -gt 0 ]]
+sbatch --array="1-${N_SAMPLES//[[:space:]]/}%300" full_pipeline_scripts/slurm/metagenome_sample_features.sh
 
 echo "Submitted metagenome feature jobs. Monitor with: squeue -u $USER"

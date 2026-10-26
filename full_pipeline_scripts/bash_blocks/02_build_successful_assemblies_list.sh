@@ -2,10 +2,17 @@
 set -euo pipefail
 
 # Build list of successful assemblies from metaSPAdes output
-# This scans the assembly directory and extracts all SampleIDs that produced contigs.fasta
+# Only samples in the final accession manifest are eligible.
 # Output: analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt
 
-find analyses/bacteroides_pul/metagenomes/assembly/metaspades -type f -name contigs.fasta \
-  | awk -F'/' '{print $6}' | sort > analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt
+Rscript - <<'RS'
+metadata <- read.csv("data/read_metadata.csv", colClasses = "character")
+stopifnot(!anyNA(metadata$SampleID), all(nzchar(metadata$SampleID)),
+          !anyDuplicated(metadata$SampleID))
+assemblies <- file.path("analyses/bacteroides_pul/metagenomes/assembly/metaspades",
+                        metadata$SampleID, "contigs.fasta")
+writeLines(sort(metadata$SampleID[file.exists(assemblies)]),
+           "analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt")
+RS
 
 echo "Successfully created: analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt"
