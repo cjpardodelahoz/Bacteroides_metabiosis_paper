@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --array=1-2053
+#SBATCH --array=1-2022
 #SBATCH --output=log/bacteroides_pul/filter_contigs_isabl1_%A_%a.out
 #SBATCH --error=log/bacteroides_variation/filter_contigs_isabl1_%A_%a.err
 #SBATCH --time=02:00:00

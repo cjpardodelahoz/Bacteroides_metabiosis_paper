@@ -44,19 +44,12 @@ Return to the main project page: [README](../README.md).
 
 1. Place metagenomic FASTQ files under `data/reads/`.
 2. Use the supplied `data/read_metadata.csv`, the final 2,022-sample accession
-  manifest with columns `SRA_accession,SampleID,PatientID`. Do not augment it
-  by scanning existing assemblies or per-sample output directories.
+  manifest with columns `SRA_accession,SampleID,PatientID`.
 3. Submit per-sample assembly (fastp + metaSPAdes):
 
 ```bash
 bash full_pipeline_scripts/bash_blocks/01_run_metaspades_assembly.sh
 ```
-
-Use the numbered submission wrappers: they override the SLURM scripts' default
-array bounds with the current manifest or success-list size. Assembly discovery
-checks only manifest-listed samples, and the feature merge reads only the
-dbCAN-success list, ignoring stale per-sample outputs. Missing CGC predictions
-remain exclusions, not zero-valued gene counts.
 
 ### B) Multi-sample Binning
 

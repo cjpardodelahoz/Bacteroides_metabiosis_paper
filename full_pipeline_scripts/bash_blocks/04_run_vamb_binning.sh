@@ -7,8 +7,6 @@ set -euo pipefail
 # Outputs:
 #   - VAMB bins: analyses/bacteroides_pul/binning/short/isabl1/vamb/multi/{PatientID}/vambout/bins/*.fna
 
-N_PATIENTS=$(find analyses/bacteroides_pul/binning/short/isabl1/patient_samples -maxdepth 1 -name '*.txt' -type f | wc -l)
-[[ "$N_PATIENTS" -gt 0 ]]
-sbatch --array="1-${N_PATIENTS//[[:space:]]/}%50" full_pipeline_scripts/slurm/vamb_multi_isabl1.sh
+sbatch full_pipeline_scripts/slurm/vamb_multi_isabl1.sh
 
 echo "Submitted VAMB binning jobs. Monitor with: squeue -u $USER"

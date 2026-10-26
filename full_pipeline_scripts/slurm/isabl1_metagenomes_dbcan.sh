@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --array=1-2053%100          # update upper bound to match metaspades_successful_samples.txt rows
+#SBATCH --array=1-2022%100
 #SBATCH --mem=16G                   # Memory per task
 #SBATCH -c 8                        # Number of CPU cores per task
 #SBATCH --time=24:00:00             # Maximum runtime

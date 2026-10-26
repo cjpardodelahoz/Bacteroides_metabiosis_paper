@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --array=1-2077%50           # update upper bound to match read_metadata.csv rows
+#SBATCH --array=1-2022%50
 #SBATCH --mem=48G                  # Memory per task
 #SBATCH -c 16                       # Number of CPU cores per task
 #SBATCH --time=120:00:00            # Maximum runtime

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --array=1-2045%300          # update upper bound to match isabl1_dbcan_successful_samples.txt rows
+#SBATCH --array=1-2014%300
 #SBATCH --mem=2G                    # Memory per task
 #SBATCH -c 1                        # Number of CPU cores per task
 #SBATCH --time=00:10:00             # Maximum runtime

@@ -11,9 +11,7 @@ set -euo pipefail
 #   - Coverage: analyses/bacteroides_pul/metagenome_pul_abund/{SampleID}/{SampleID}.depth.txt
 #   - Substrates: analyses/bacteroides_pul/metagenome_pul_abund/{SampleID}/fam_substrate_abund.out
 
-N_SAMPLES=$(wc -l < analyses/bacteroides_pul/metagenome_pul_prediction/isabl1_dbcan_successful_samples.txt)
-[[ "$N_SAMPLES" -gt 0 ]]
-sbatch --array="1-${N_SAMPLES//[[:space:]]/}%500" full_pipeline_scripts/slurm/isabl1_metagenomes_signalp.sh
-sbatch --array="1-${N_SAMPLES//[[:space:]]/}%40" full_pipeline_scripts/slurm/isabl1_metagenomes_abund.sh
+sbatch full_pipeline_scripts/slurm/isabl1_metagenomes_signalp.sh
+sbatch full_pipeline_scripts/slurm/isabl1_metagenomes_abund.sh
 
 echo "Submitted metagenome SignalP and abundance jobs. Monitor with: squeue -u $USER"

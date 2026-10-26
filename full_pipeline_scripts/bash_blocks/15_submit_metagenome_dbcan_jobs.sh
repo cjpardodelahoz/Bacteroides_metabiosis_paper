@@ -7,8 +7,6 @@ set -euo pipefail
 # Output: analyses/bacteroides_pul/metagenome_pul_prediction/isabl1/{SampleID}/
 #   (uniInput.gff, CGC.faa, cgc_standard_out.tsv, dbCANsub_hmm_results.tsv, ...)
 
-N_SAMPLES=$(wc -l < analyses/bacteroides_pul/metagenomes/metaspades_successful_samples.txt)
-[[ "$N_SAMPLES" -gt 0 ]]
-sbatch --array="1-${N_SAMPLES//[[:space:]]/}%100" full_pipeline_scripts/slurm/isabl1_metagenomes_dbcan.sh
+sbatch full_pipeline_scripts/slurm/isabl1_metagenomes_dbcan.sh
 
 echo "Submitted metagenome dbCAN jobs. Monitor with: squeue -u $USER"
